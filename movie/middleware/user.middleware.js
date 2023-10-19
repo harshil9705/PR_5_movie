@@ -19,8 +19,8 @@ const signinmiddle= (req,res,next)=>{
     }
 }
 const moviemiddle = (req,res,next)=>{
-    const{title,description,releaseDate,category,actors,image,ratings,comments,addedBy}= req.body
-    if(title&&description&&releaseDate&&category&&actors&&image&&ratings&&comments&&addedBy){
+    const{title,releaseDate,addedBy}= req.body
+    if(title&&releaseDate&&addedBy){
         next()
     }
     else{

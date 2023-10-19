@@ -39,12 +39,40 @@ const login = async(req,res)=>{
     }
 }
 
+// create movie
 const moviecreate = async(req,res)=>{
     const data = await movie.create(req.body)
     console.log(data);
     res.status(201).send(data)
 } 
 
-    
+// update movie
+const movieupdate = async(req,res)=>{
+    const {id} = req.params
+    const data = await movie.findByIdAndUpdate(id,req.body)
+    const updated = await movie.findById(id)
+    res.status(200).send(updated)
+} 
 
-module.exports = {welcome,signup,dlt,login,alldata,moviecreate}
+//movie delete
+const moviedlt = async(req,res)=>{
+    const {id} = req.params
+    const data = await movie.findByIdAndDelete(id)
+    res.send({message: "Movie deleted"})
+}
+ 
+//add rating
+
+const addrationg = async(req,res)=>{
+    const {id} = req.params
+    
+}
+
+// filter
+
+const filter = async(req,res)=>{
+    let filterdata = await movie.find(req.query)
+    res.send(filterdata)
+}
+
+module.exports = {welcome,signup,dlt,login,alldata,moviecreate,movieupdate,moviedlt,filter}
