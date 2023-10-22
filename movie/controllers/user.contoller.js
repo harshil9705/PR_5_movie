@@ -42,7 +42,6 @@ const login = async(req,res)=>{
 // create movie
 const moviecreate = async(req,res)=>{
     const data = await movie.create(req.body)
-    console.log(data);
     res.status(201).send(data)
 } 
 
@@ -63,9 +62,34 @@ const moviedlt = async(req,res)=>{
  
 //add rating
 
-const addrationg = async(req,res)=>{
+const rating = async(req,res)=>{
     const {id} = req.params
-    
+    if(id){
+        let data = await movie.findById(id)
+        data.ratings.push({value : req.body.rating})
+        await data.save()
+        console.log(data);
+        res.send(data)
+    }
+    else{
+        res.send({error: "movie not found"})
+    }
+
+}
+
+// add comment
+
+const comment = async(req,res)=>{
+    const {id} = req.params
+    if(id){
+        const data = await movie.findById(id)
+        data.comments.push(req.body)
+        await data.save()
+        res.send(data)
+    }
+    else{
+        res.send({error: "movie not found"})
+    }
 }
 
 // filter
@@ -75,4 +99,4 @@ const filter = async(req,res)=>{
     res.send(filterdata)
 }
 
-module.exports = {welcome,signup,dlt,login,alldata,moviecreate,movieupdate,moviedlt,filter}
+module.exports = {welcome,signup,dlt,login,alldata,moviecreate,movieupdate,moviedlt,filter,rating,comment}
